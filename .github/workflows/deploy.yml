@@ -1,27 +1,27 @@
-name: Deploy to Kubernetes
+name: Deploy to Kubernetes using Helm
 
 on:
   push:
     branches:
-      - main  # Déclenche le workflow uniquement sur des pushes vers la branche 'main'
+      - main  # Déclenche le workflow lorsque vous poussez sur la branche 'main'
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Utilise un runner Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2  # Récupère le code du dépôt
-
-    - name: Set up Helm
-      uses: helm/actions@v2  # Utilise l'action officielle Helm pour installer Helm
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
     - name: Set up Kubeconfig
       run: |
-        # mkdir -p ~/.kube
-        echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config  # Charge le kubeconfig depuis les secrets GitHub
+        echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
 
-    - name: Deploy to Kubernetes using Helm
+    - name: Install Helm
       run: |
-        helm upgrade --install my-app ./helm/first-app --namespace default --values ./helm/first-app/values.yaml
-        # Remplacez 'my-app' par le nom de votre application et ajustez le chemin du chart Helm
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+    - name: Deploy Helm chart
+      run: |
+        helm upgrade --install my-app ./path-to-your-chart --namespace my-app-namespace --values ./path-to-your-chart/values.yaml
+
