@@ -1,0 +1,5 @@
+# Ignore les fichiers et répertoires liés à Docker et aux dépendances
+node_modules/
+*.log
+Dockerfile
+helm/first-app/*.tgz
