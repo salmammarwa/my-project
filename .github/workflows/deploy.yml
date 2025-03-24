@@ -16,10 +16,13 @@ jobs:
     - name: Set up Kubeconfig
       run: |
         echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+        # Teste la connectivité avec le cluster Kubernetes
+        kubectl get nodes
 
     - name: Install Helm
       run: |
         curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+        helm version  # Affiche la version de Helm pour vérifier l'installation
 
     - name: Deploy Helm chart
       run: |
