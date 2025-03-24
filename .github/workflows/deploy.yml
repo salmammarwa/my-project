@@ -24,5 +24,5 @@ jobs:
 
     - name: Deploy Helm chart
       run: |
-        helm upgrade --install my-app ./path-to-your-chart --namespace my-app-namespace --values ./path-to-your-chart/values.yaml
+        helm upgrade --install my-app ./helm/first-app --namespace my-app-namespace --values ./helm/first-app/values.yaml
 
