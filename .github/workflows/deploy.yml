@@ -3,7 +3,7 @@ name: Deploy to Kubernetes using Helm
 on:
   push:
     branches:
-      - main  # Déclenche le workflow lorsque vous poussez sur la branche 'main'
+      - main
 
 jobs:
   deploy:
@@ -15,13 +15,12 @@ jobs:
 
     - name: Set up Kubeconfig
       run: |
-        mkdir -p ~/.kube  # Crée le dossier .kube si il n'existe pas
-        echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config  # Charge le kubeconfig depuis les secrets GitHub
+        mkdir -p ~/.kube  # Crée le dossier .kube s'il n'existe pas
+        echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ~/.kube/config  # Décode le secret base64 et le place dans ~/.kube/config
 
     - name: Install Helm
       run: |
         curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-        helm version  # Affiche la version de Helm pour vérifier l'installation
 
     - name: Deploy Helm chart
       run: |
